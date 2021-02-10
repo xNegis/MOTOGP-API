@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import exceptions.sessionNotFoundException;
+import exceptions.yearNotValidException;
 import motogpApiV2.RaceCode;
+import motogpApiV2.Session;
 import motogpApiV2.GranPremioDetails.Venue;
 import motogpApiV2.races.Races;
 import motogpApiV2.races.Schedule;
@@ -15,28 +17,28 @@ import motogpApiV2.results.Competitor;
 
 public class ApiMain {
 
-	public static void main(String[] args) throws IOException, InterruptedException, sessionNotFoundException {
+	public static void main(String[] args) throws IOException, InterruptedException, sessionNotFoundException, yearNotValidException {
 
-		List<Competitor> competitors =getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(2019, RaceCode.QAT, Category.Moto2, Session.Race);
+		List<Competitor> competitors =getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(2022, RaceCode.QAT, Category.Moto2, Session.Test_Exception);
 		
 		for(Competitor c:competitors) {
 			System.out.println(c.getName()+ " - " + c.getResult().getPosition() + "º");
 		}
 		TimeUnit.SECONDS.sleep(1);
 
-		System.out.println("---");
-		
-		List<Venue> listaDetalles = getDetailsOfASeasonGPs(2019, Category.MotoGP);
-		for(Venue v: listaDetalles) {
-			System.out.println(v.getName());
-		}
+//		System.out.println("------------------------------------------------------------");
+//		
+//		List<Venue> listaDetalles = getDetailsOfASeasonGPs(2019, Category.MotoGP);
+//		for(Venue v: listaDetalles) {
+//			System.out.println(v.getName());
+//		}
 	}
 
 
 
 	public static List<Competitor> getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(Integer yearToRequest,
 			RaceCode raceCodeToRequest, Category categoryToRequest,Session session)
-			throws  IOException, InterruptedException, sessionNotFoundException {
+			throws  IOException, InterruptedException, sessionNotFoundException, yearNotValidException {
 
 		
 		String idOfScheduleWanted = SeasonFinder.getSeasonByCategoryAndYear(yearToRequest,categoryToRequest);
@@ -54,7 +56,7 @@ public class ApiMain {
 	}
 
 
-	public static List<Venue> getDetailsOfASeasonGPs(Integer yearOfSeason, Category categoryOfTheSeason) throws IOException, InterruptedException {
+	public static List<Venue> getDetailsOfASeasonGPs(Integer yearOfSeason, Category categoryOfTheSeason) throws IOException, InterruptedException, yearNotValidException {
 	
 		String idOfScheduleWanted = SeasonFinder.getSeasonByCategoryAndYear(yearOfSeason,categoryOfTheSeason);
 		Schedule schedule = SchedulesFinder.getSchedules(idOfScheduleWanted);

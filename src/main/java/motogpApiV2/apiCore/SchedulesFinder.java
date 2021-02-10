@@ -10,6 +10,7 @@ import exceptions.sessionNotFoundException;
 import motogpApiV2.RaceCode;
 import motogpApiV2.races.Races;
 import motogpApiV2.races.Schedule;
+import motogpApiV2.Session;
 
 public class SchedulesFinder {
 	private static String API_KEY="zzea8d8qessqzttp987a6h5c";
@@ -118,7 +119,7 @@ public class SchedulesFinder {
 		case Race:
 			return "Race";
 		default:
-			throw new sessionNotFoundException();
+			throw new sessionNotFoundException("Session '" + s +"' was impossible to find in schedules, please retry with another session");
 		}
 	}
 }

@@ -1,10 +1,9 @@
 package exceptions;
 
-public class sessionNotFoundException extends Exception {
-
+public class yearNotValidException extends Exception {
 	String message;
 
-	public sessionNotFoundException(String message) {
+	public yearNotValidException(String message) {
 		super();
 		this.message = message;
 	}
@@ -16,5 +15,4 @@ public class sessionNotFoundException extends Exception {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
 }

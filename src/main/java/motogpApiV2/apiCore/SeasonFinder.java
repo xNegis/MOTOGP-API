@@ -2,6 +2,7 @@ package motogpApiV2.apiCore;
 
 import java.io.IOException;
 
+import exceptions.yearNotValidException;
 import motogpApiV2.stage.Season;
 import motogpApiV2.stage.Stage;
 
@@ -13,7 +14,9 @@ public class SeasonFinder {
 	private static final String urlToObtainSeasons = "https://api.sportradar.us/motogp/trial/v2/en/seasons.json?api_key=";
 	
 	public static String getSeasonByCategoryAndYear(Integer yearToRequest, Category categoryToRequest)
-			throws IOException {
+			throws IOException, yearNotValidException {
+		Checkers.checkIfYearIsInApi(yearToRequest);
+		
 		String idToFind = "";
 
 		String urlToGetRequestApi = urlToObtainSeasons + API_KEY;
