@@ -1,11 +1,12 @@
 package motogpApiV2.apiCore;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import exceptions.emptyResponseException;
+import exceptions.raceCodeUnabaliableException;
 import exceptions.sessionNotFoundException;
 import exceptions.yearNotValidException;
 import motogpApiV2.RaceCode;
@@ -15,51 +16,38 @@ import motogpApiV2.races.Races;
 import motogpApiV2.races.Schedule;
 import motogpApiV2.results.Competitor;
 
-public class ApiMain {
-
-	public static void main(String[] args) throws IOException, InterruptedException, sessionNotFoundException, yearNotValidException {
-
-		List<Competitor> competitors =getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(2022, RaceCode.QAT, Category.Moto2, Session.Test_Exception);
-		
-		for(Competitor c:competitors) {
-			System.out.println(c.getName()+ " - " + c.getResult().getPosition() + "º");
-		}
-		TimeUnit.SECONDS.sleep(1);
-
-//		System.out.println("------------------------------------------------------------");
-//		
-//		List<Venue> listaDetalles = getDetailsOfASeasonGPs(2019, Category.MotoGP);
-//		for(Venue v: listaDetalles) {
-//			System.out.println(v.getName());
-//		}
-	}
-
-
+public class APIGetters {
+	private static String API_KEY="zzea8d8qessqzttp987a6h5c";//Your APIKEY HERE
 
 	public static List<Competitor> getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(Integer yearToRequest,
 			RaceCode raceCodeToRequest, Category categoryToRequest,Session session)
-			throws  IOException, InterruptedException, sessionNotFoundException, yearNotValidException {
+			throws  IOException, InterruptedException, sessionNotFoundException, yearNotValidException, raceCodeUnabaliableException, emptyResponseException {
 
 		
 		String idOfScheduleWanted = SeasonFinder.getSeasonByCategoryAndYear(yearToRequest,categoryToRequest);
-
-		Schedule schedules = SchedulesFinder.getSchedules(idOfScheduleWanted);
+		
+		TimeUnit.SECONDS.sleep(1);
+		
+		Schedule schedules = SchedulesFinder.getSeasonSchedule(idOfScheduleWanted);
+		
+		TimeUnit.SECONDS.sleep(1);
 		
 		String idOfResultsWanted = SchedulesFinder.getScheduleByRaceCodeAndYear(schedules, yearToRequest, raceCodeToRequest, session);
 		
 		List<Competitor> competitorsFound = CompetitorResultsFinder.getResultsByScheduleId(idOfResultsWanted);
 		
-		if(competitorsFound.size()==0 || competitorsFound==null) {
-			throw new FileNotFoundException();
-		}
+		Checkers.checkIfCompetitorsHaveBeenFound(competitorsFound);
+		competitorsFound = Checkers.checkIfThereIsNullableContentAndDeleteNullables(competitorsFound);
 		return competitorsFound;
 	}
 
 
-	public static List<Venue> getDetailsOfASeasonGPs(Integer yearOfSeason, Category categoryOfTheSeason) throws IOException, InterruptedException, yearNotValidException {
+	public static List<Venue> getDetailsOfASeasonGPs(Integer yearOfSeason, Category categoryOfTheSeason) throws IOException, InterruptedException, yearNotValidException, emptyResponseException {
 	
 		String idOfScheduleWanted = SeasonFinder.getSeasonByCategoryAndYear(yearOfSeason,categoryOfTheSeason);
-		Schedule schedule = SchedulesFinder.getSchedules(idOfScheduleWanted);
+		TimeUnit.SECONDS.sleep(1);
+
+		Schedule schedule = SchedulesFinder.getSeasonSchedule(idOfScheduleWanted);
 		
 		Integer numOfGranPremiosScheduled = schedule.getRacesNum();
 		
@@ -72,9 +60,15 @@ public class ApiMain {
 			detailsOfAllGPsScheduled.add(venue);
 		}
 		
+		Checkers.checkIfGranPremiosHaveBeenFound(detailsOfAllGPsScheduled);
+		
+		detailsOfAllGPsScheduled = Checkers.checkIfThereIsNullableContentAndDeleteNullables(detailsOfAllGPsScheduled);
+		
 		return detailsOfAllGPsScheduled;
 	}
 
-	
+	public static String getAPIKey() {
+		return API_KEY;
+	}
 	
 }

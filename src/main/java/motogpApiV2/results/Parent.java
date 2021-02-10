@@ -1,4 +1,3 @@
-
 package motogpApiV2.results;
 
 import java.util.HashMap;

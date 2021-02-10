@@ -8,7 +8,6 @@ import motogpApiV2.results.Results;
 
 public class CompetitorResultsFinder {
 	
-	private static String API_KEY="zzea8d8qessqzttp987a6h5c";
 
 	private static final String rootUrl = "https://api.sportradar.us/motogp/trial/v2/en/sport_events/";
 	
@@ -17,9 +16,7 @@ public class CompetitorResultsFinder {
 	public static List<Competitor> getResultsByScheduleId(String scheduleIdToGetResults)
 			throws IOException, InterruptedException {
 		
-		
-		
-		String urlToGetRequestApi = rootUrl + scheduleIdToGetResults + urlToObtainResults + API_KEY;
+		String urlToGetRequestApi = rootUrl + scheduleIdToGetResults + urlToObtainResults + APIGetters.getAPIKey();
 		Results results = RequestToEntityFormatter.getEntityFromAnApiCall(Results.class, urlToGetRequestApi);
 
 		return results.getStage().getCompetitors();

@@ -7,19 +7,17 @@ import motogpApiV2.stage.Season;
 import motogpApiV2.stage.Stage;
 
 public class SeasonFinder {
-
-	private static String API_KEY="zzea8d8qessqzttp987a6h5c";
-
 	
 	private static final String urlToObtainSeasons = "https://api.sportradar.us/motogp/trial/v2/en/seasons.json?api_key=";
 	
 	public static String getSeasonByCategoryAndYear(Integer yearToRequest, Category categoryToRequest)
 			throws IOException, yearNotValidException {
+		
 		Checkers.checkIfYearIsInApi(yearToRequest);
 		
 		String idToFind = "";
 
-		String urlToGetRequestApi = urlToObtainSeasons + API_KEY;
+		String urlToGetRequestApi = urlToObtainSeasons + APIGetters.getAPIKey();
 		
 		Stage allSeasons = RequestToEntityFormatter.getEntityFromAnApiCall(Stage.class, urlToGetRequestApi);
 

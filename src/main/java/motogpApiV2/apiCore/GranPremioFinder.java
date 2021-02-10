@@ -11,7 +11,6 @@ import motogpApiV2.GranPremioDetails.Venue;
 
 public class GranPremioFinder {
 
-	private static String API_KEY="zzea8d8qessqzttp987a6h5c";
 
 	private static final String rootUrl = "https://api.sportradar.us/motogp/trial/v2/en/sport_events/";
 	
@@ -20,7 +19,7 @@ public class GranPremioFinder {
 	public static Venue obtainDetailsFromGp(String idOfGPsToGetDetails) throws JsonMappingException, JsonProcessingException, IOException, InterruptedException {
 		TimeUnit.SECONDS.sleep(1);
 
-			String uri =rootUrl+idOfGPsToGetDetails+urlToObtainResults+API_KEY;
+			String uri =rootUrl+idOfGPsToGetDetails+urlToObtainResults+APIGetters.getAPIKey();
 			GranPremioDetails detailsOfGP_i =RequestToEntityFormatter.getEntityFromAnApiCall(GranPremioDetails.class, uri);
 			
 			return detailsOfGP_i.getStage().getVenue();
