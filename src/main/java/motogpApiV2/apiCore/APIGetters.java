@@ -19,6 +19,7 @@ import motogpApiV2.results.Competitor;
 public class APIGetters {
 	private static String API_KEY="zzea8d8qessqzttp987a6h5c";//Your APIKEY HERE
 
+	
 	public static List<Competitor> getCompetitorAndItsResultsByCategoryRaceCodeYearAndSession(Integer yearToRequest,
 			RaceCode raceCodeToRequest, Category categoryToRequest,Session session)
 			throws  IOException, InterruptedException, sessionNotFoundException, yearNotValidException, raceCodeUnabaliableException, emptyResponseException {
