@@ -26,6 +26,7 @@ List<Competitor> competitors =APIGetters.getCompetitorAndItsResultsByCategoryRac
 ```
 **Printed** 
 
+```java
 Vinales, Maverick - 1º
 Dovizioso, Andrea - 2º
 Marquez, Marc - 3º
@@ -49,6 +50,7 @@ Abraham, Karel - 20º
 Zarco, Johann - 21º
 Syahrin Abdullah, Hafizh - 22º
 Smith, Bradley - 23º
+```
 
 The method **getDetailsOfASeasonGPs** calls to the API and return a list of Venues. You can iterate over this list to get information about the information of each Venue (Gran Premio) as **city**, **country**, **country code**,  **name**, **curves left**, **curves right**, **debut** or even the **lenght** of the circuit
 
@@ -63,7 +65,7 @@ List<Venue> detailedGps = APIGetters.getDetailsOfASeasonGPs(2013, Category.MotoG
 ```
 
 **Printed**
-
+```java
 Losail International Circuit
 Circuit of The Americas
 Circuit de Jerez
@@ -81,6 +83,7 @@ Sepang International Circuit
 Phillip Island Circuit
 Twin Ring Motegi
 Circuit de la Comunitat Valenciana Ricardo Tormo
+```
 
 This two methods are depending of more methods that you can found and read inside this proyect. If you are not interested at what these two methods returns, you can use more methods that are coded inside for your own benefit, you only have to take a glance at them.
 
