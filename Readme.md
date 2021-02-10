@@ -106,3 +106,6 @@ You will see throughtout all the clases the following instance :
 This is simply there to not overpass the limit of querys per second. If your key is a trial, it will have this restrinction.
 
 You can put your Api key at the **APIGetters.java** class.
+
+**Last update 11/02/2021.**
+**Current version 1.0**
